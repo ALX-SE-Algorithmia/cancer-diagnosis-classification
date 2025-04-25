@@ -74,7 +74,9 @@ ehthumbs.db
 Thumbs.db
 
 # DVC
-.dvc/
+.dvc/cache
+.dvc/tmp
+.dvc/plots
 .dvcignore
 
 # PyInstaller
