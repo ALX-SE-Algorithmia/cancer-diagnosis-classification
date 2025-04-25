@@ -1,0 +1,53 @@
+stages:
+  prepare:
+    cmd: python src/data/prepare_data.py
+    deps:
+      - src/data/prepare_data.py
+      - ${data.raw_dir}
+    params:
+      - data.raw_dir
+      - data.processed_dir
+      - data.train_ratio
+      - data.val_ratio
+      - data.test_ratio
+      - data.seed
+      - data.metadata_file
+    outs:
+      - ${data.processed_dir}
+      - ${data.metadata_file}
+  
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - src/models/cnn_classifier.py
+      - ${data.processed_dir}
+      - ${data.metadata_file}
+    params:
+      - preprocessing
+      - model
+      - training
+      - data.seed
+      - data.processed_dir
+      - data.metadata_file
+    outs:
+      - ${training.checkpoint_dir}
+    metrics:
+      - metrics.json:
+          cache: false
+  
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - ${training.checkpoint_dir}
+      - ${data.processed_dir}
+      - ${data.metadata_file}
+    params:
+      - evaluation
+      - model
+      - data.processed_dir
+      - data.metadata_file
+    metrics:
+      - evaluation.json:
+          cache: false

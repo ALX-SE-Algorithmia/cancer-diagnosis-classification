@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rare_genetic_disorders_classifier"
+version = "0.1.0"
+description = "CNN classifier for detecting visual markers of rare genetic conditions from medical scans"
+readme = "README.md"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy>=1.20.0",
+    "torch>=1.9.0",
+    "torchvision>=0.10.0",
+    "matplotlib>=3.4.0",
+    "scikit-learn>=0.24.0",
+    "pandas>=1.3.0",
+    "nibabel>=3.2.0",  # For medical image formats
+    "monai>=0.8.0",    # Medical imaging deep learning framework
+    "SimpleITK>=2.1.0", # Medical image processing
+    "tqdm>=4.62.0",
+    "tensorboard>=2.6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.2.5",
+    "pytest-cov>=2.12.1",
+    "black>=21.6b0",
+    "isort>=5.9.2",
+    "flake8>=3.9.2",
+    "mypy>=0.910",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"

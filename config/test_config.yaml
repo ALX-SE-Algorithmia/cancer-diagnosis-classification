@@ -1,0 +1,28 @@
+# Test configuration for cancer diagnosis classification
+
+# Data configuration
+data:
+  data_dir: "data/raw"
+  processed_dir: "data/processed"
+  metadata_file: "data/metadata.csv"
+  cache_dir: "data/cache"
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  seed: 42
+
+# Model configuration
+model:
+  name: "cnn_classifier"
+  backbone: "densenet"
+  pretrained: false
+  in_channels: 1
+  num_classes: 2
+  spatial_dims: 3
+  dropout_prob: 0.2
+
+# Preprocessing configuration
+preprocessing:
+  spatial_size: [64, 64, 64]
+  intensity_normalization: true
+  augmentation: true

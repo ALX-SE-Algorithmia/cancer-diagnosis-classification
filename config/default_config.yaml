@@ -1,0 +1,53 @@
+# Default configuration for rare genetic disorders classification
+
+# Data configuration
+data:
+  data_dir: "data/raw"
+  processed_dir: "data/processed"
+  metadata_file: "data/metadata.csv"
+  cache_dir: "data/cache"
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  seed: 42
+
+# Model configuration
+model:
+  name: "cnn_classifier"
+  backbone: "densenet"  # Options: densenet, resnet, custom
+  pretrained: true
+  in_channels: 1
+  num_classes: 2  # Update based on your dataset
+  spatial_dims: 3
+  dropout_prob: 0.2
+  initial_filters: 32  # Only for custom CNN
+
+# Training configuration
+training:
+  batch_size: 4
+  num_workers: 4
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-5
+  num_epochs: 100
+  early_stopping_patience: 10
+  checkpoint_dir: "models/checkpoints"
+  tensorboard_dir: "logs/tensorboard"
+  experiment_name: "rare_genetic_disorders_classifier"
+  optimizer: "adam"  # Options: adam, sgd, adamw
+  scheduler: "reduce_lr_on_plateau"  # Options: reduce_lr_on_plateau, cosine_annealing, step
+  class_weights: true  # Whether to use class weights for imbalanced data
+
+# Preprocessing configuration
+preprocessing:
+  spatial_size: [128, 128, 128]
+  intensity_normalization: true
+  augmentation: true
+  rotation_range: [-15, 15]
+  scale_range: [-0.1, 0.1]
+
+# Evaluation configuration
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1", "auc"]
+  save_predictions: true
+  prediction_dir: "results/predictions"
+  visualization_dir: "results/visualizations"

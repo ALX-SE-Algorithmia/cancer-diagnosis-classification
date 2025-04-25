@@ -1,0 +1,41 @@
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  seed: 42
+  metadata_file: data/metadata.csv
+  cache_dir: data/cache
+
+preprocessing:
+  spatial_size: [224, 224, 1]  # For 2D images with single channel
+  rotation_range: [-10, 10]
+  scale_range: [0.9, 1.1]
+  intensity_range: [0.9, 1.1]
+  normalize: true
+
+model:
+  name: "densenet121"  # Options: densenet121, resnet50, custom
+  num_classes: 2
+  pretrained: true
+  dropout_rate: 0.2
+  in_channels: 1
+
+training:
+  experiment_name: "cancer_diagnosis_classifier"
+  batch_size: 16
+  num_epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: "adam"  # Options: adam, sgd, adamw
+  scheduler: "reduce_lr_on_plateau"  # Options: reduce_lr_on_plateau, cosine_annealing, step, none
+  early_stopping_patience: 10
+  use_class_weights: true
+  checkpoint_dir: models/checkpoints
+  log_interval: 10
+
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1", "auc", "confusion_matrix"]
+  visualize: true
+  save_predictions: true
